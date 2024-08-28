@@ -1,7 +1,7 @@
 import psycopg2
 from psycopg2 import sql
 
-connection_string = "postgres://default:GSpToj6IMLZ3@ep-blue-lab-a4kmce5a.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require"
+connection_string = " " ## Enter postgress connenction string
 
 
 def insert_studytimeline(name,totalcost,d1,d2,duration):
