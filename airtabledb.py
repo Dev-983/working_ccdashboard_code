@@ -5,7 +5,7 @@ import time
 def getDataFromPrograms():
   url = "https://api.airtable.com/v0/appWEthfvqsYcS0JG/Programs"
   headers = {
-    'Authorization': 'Bearer patO3q6noIfzawBRE.2da1385e6c37631c54975c870ebaf68c07329c7014abe3e0f9e08ca7e68ba585'
+    'Authorization': 'Bearer '  ## Enter airtable token
    }
   response = requests.request("GET", url, headers=headers)
   data = json.loads(response.text)
@@ -46,7 +46,7 @@ def create_record_Program(name,totalcost,d1,d2):
   # Convert the dictionary to a JSON string
   payload2 = json.dumps(data2)  
   headers2 = {
-    'Authorization': 'Bearer patO3q6noIfzawBRE.2da1385e6c37631c54975c870ebaf68c07329c7014abe3e0f9e08ca7e68ba585',
+    'Authorization': 'Bearer ', ## Enter airtable token
     'Content-Type': 'application/json'
   }
   
@@ -92,7 +92,7 @@ def add_list(arr,ids):
     payload3 = json.dumps(dataset3)
 
     headers3 = {
-      'Authorization': 'Bearer patO3q6noIfzawBRE.2da1385e6c37631c54975c870ebaf68c07329c7014abe3e0f9e08ca7e68ba585',
+      'Authorization': 'Bearer ', ## Enter airtable token
       'Content-Type': 'application/json',   
     }
     try:
@@ -122,7 +122,7 @@ def add_list(arr,ids):
 def getList():
   url = "https://api.airtable.com/v0/appWEthfvqsYcS0JG/studytimeline"
   headers = {
-    'Authorization': 'Bearer patO3q6noIfzawBRE.2da1385e6c37631c54975c870ebaf68c07329c7014abe3e0f9e08ca7e68ba585'
+    'Authorization': 'Bearer ' ## Enter airtable token
    }
   response = requests.request("GET", url, headers=headers)
   data = json.loads(response.text)
