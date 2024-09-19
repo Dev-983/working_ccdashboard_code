@@ -1,0 +1,1259 @@
+        <!DOCTYPE html>
+        <html lang="en">
+          <head>
+            <!-- Required meta tags -->
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+            <title>BPX Dashboard</title>
+            <!-- plugins:css -->
+            <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendors/mdi/css/materialdesignicons.min.css') }}">
+            <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendors/ti-icons/css/themify-icons.css') }}">
+            <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendors/css/vendor.bundle.base.css') }}">
+            <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendors/font-awesome/css/font-awesome.min.css') }}">
+            <!-- endinject -->
+            <!-- Plugin css for this page -->
+            <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendors/select2/select2.min.css') }}">
+            <link href="https://unpkg.com/vis-timeline@latest/styles/vis-timeline-graph2d.min.css" rel="stylesheet" type="text/css" />
+            <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendors/select2-bootstrap-theme/select2-bootstrap.min.css') }}">
+            <!-- End plugin css for this page -->
+            <!-- inject:css -->
+            <!-- endinject -->
+            <!-- Layout styles -->
+            <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/style.css') }}">
+            <!-- End layout styles -->
+            <link rel="shortcut icon" href="{{ url_for('static', filename='assets/images/favicon.png') }}" />
+
+          <!-- <script src="{{ url_for('static', filename='assets/vendors/typeahead.js/typeahead.bundle.min.js') }}"></script> -->
+
+         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.6.2/css/bootstrap-slider.min.css">
+
+            <!-- Include Mobiscroll CSS first -->
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/mobiscroll.javascript.min.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/chatbot.css') }}">
+            <!-- Include jQuery before Mobiscroll -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+            <!-- Include Mobiscroll JS -->
+<script src="{{ url_for('static', filename='assets/js/mobiscroll.javascript.min.js') }}"></script>
+
+
+           <style type="text/css">
+        table {
+          border: 1px solid #ccc;
+          border-collapse: collapse;
+          margin: 0;
+          padding: 0;
+          width: 100%;
+          table-layout: fixed;
+          margin-top: 20px;
+        }
+
+        table caption {
+          font-size: 1.5em;
+          margin: .5em 0 .75em;
+        }
+
+        table tr {
+          background-color: #f8f8f8;
+          border: 1px solid #ddd;
+          padding: .35em;
+        }
+
+        table th,
+        table td {
+          padding: .625em;
+          text-align: center;
+        }
+
+        table th {
+          font-size: .85em;
+          letter-spacing: .1em;
+          text-transform: uppercase;
+        }
+
+        @media screen and (max-width: 600px) {
+          table {
+            border: 0;
+            margin-top: 20px;
+          }
+
+          table caption {
+            font-size: 1.3em;
+          }
+
+          table thead {
+            border: none;
+            clip: rect(0 0 0 0);
+            height: 1px;
+            margin: -1px;
+            overflow: hidden;
+            padding: 0;
+            position: absolute;
+            width: 1px;
+          }
+
+          table tr {
+            border-bottom: 3px solid #ddd;
+            display: block;
+            margin-bottom: .625em;
+          }
+
+          table td {
+            border-bottom: 1px solid #ddd;
+            display: block;
+            font-size: .8em;
+            text-align: right;
+          }
+
+          table td::before {
+            /*
+            * aria-label has no advantage, it won't be read inside a table
+            content: attr(aria-label);
+            */
+            content: attr(data-label);
+            float: left;
+            font-weight: bold;
+            text-transform: uppercase;
+          }
+
+          table td:last-child {
+            border-bottom: 0;
+          }
+        }
+        /* ------------------------- */
+        /*
+        =====
+        UIA-TIMELINE
+        =====
+        */
+
+        .uia-timeline__container {
+          display: var(--uia-timeline-display, grid);
+        }
+
+        .uia-timeline__groups {
+          display: var(--uia-timeline-groups-display, grid);
+          gap: var(--uia-timeline-groups-gap, 1rem);
+        }
+
+        /*
+        SKIN 1
+        */
+
+
+        /*
+        SKIN 2
+        */
+
+        [data-uia-timeline-skin="2"] {
+          --_uia-timeline-line-color_default: #222;
+          --_uia-timeline-minimal-gap: var(--uia-timeline-minimal-gap, .5rem);
+          --_uia-timeline-space: calc(var(--_uia-timeline-arrow-size) + var(--_uia-timeline-dot-size) + var(--_uia-timeline-dot-size) / 2 + var(--_uia-timeline-minimal-gap));
+          --_uia-timeline-dot-size: var(--uia-timeline-dot-size, 1rem);
+          --_uia-timeline-arrow-size: var(--uia-timeline-arrow-size, .25rem);
+          --_uia-timeline-arrow-position: var(--uia-timeline-arrow-position, 1rem);
+        }
+
+        [data-uia-timeline-skin="2"] .uia-timeline__container {
+          position: relative;
+          padding-inline-start: calc(var(--_uia-timeline-space));
+        }
+
+        [data-uia-timeline-skin="2"] .uia-timeline__line {
+          inline-size: var(--uia-timeline-line-thickness, 3px);
+          block-size: 100%;
+          background-color: var(--uia-timeline-line-color, var(--_uia-timeline-line-color_default));
+
+          position: absolute;
+          inset-block-start: 0;
+          inset-inline-start: calc(var(--_uia-timeline-dot-size) / 2);
+          transform: translate(-50%);
+        }
+
+        [data-uia-timeline-skin="2"] .uia-timeline__group {
+          position: relative;
+        }
+
+        [data-uia-timeline-skin="2"] .uia-timeline__dot {
+          box-sizing: border-box;
+          inline-size: var(--_uia-timeline-dot-size);
+          block-size: var(--_uia-timeline-dot-size);
+
+          border-radius: 50%;
+          border: 
+            var(--uia-timeline-dot-border-thickness, 1px) 
+            solid 
+            var(--uia-timeline-dot-border-color, var(--_uia-timeline-line-color_default));
+          background-color: var(--uia-timeline-dot-color, var(--_uia-timeline-line-color_default));
+
+          position: absolute;
+          /* - 4px is used for set the default gap from the top border */
+          inset-block-start: calc(var(--uia-timeline-dot-position, var(--_uia-timeline-arrow-position)) + 4px);
+          inset-inline-start: calc(-1 * var(--_uia-timeline-space));
+        } 
+
+        [data-uia-timeline-skin="2"] .uia-timeline__point {
+          position: relative;
+          background-color: var(--uia-timeline-point-background-color, #fff);
+        }
+
+        [data-uia-timeline-skin="2"] .uia-timeline__point::before {
+          content: "";
+          inline-size: 0;
+          block-size: 0;
+
+          border: var(--_uia-timeline-arrow-size) solid var(--uia-timeline-arrow-color, var(--_uia-timeline-line-color_default));
+          border-block-start-color: transparent;
+          border-inline-end-color: transparent;
+
+          position: absolute;
+          /* - 6px is used for set the default gap from the top border */
+          inset-block-start: calc(var(--_uia-timeline-arrow-position) + 6px);
+          inset-inline-start: calc(-1 * var(--_uia-timeline-arrow-size) + 1px);
+          transform: rotate(45deg);
+        }
+
+        [data-uia-timeline-adapter-skin-2="ui-card-skin-#1"] {
+          --uia-card-padding: var(--uia-timeline-point-padding, 1.5rem 1.5rem 1.25rem);
+          --uia-card-border-thickness: var(--uia-timeline-point-border-thickness, 3px);
+          --uia-card-border-color: var(--uia-timeline-point-border-color, var(--_uia-timeline-line-color_default));   
+          --uia-card-background-color: var(--uia-timeline-point-background-color);  
+        }
+
+        /*
+        SKIN 3
+        */
+
+
+
+        /*
+        SKIN 4
+        */
+
+
+
+        /*
+        SKIN 5
+        */
+
+
+        /*
+        =====
+        RESET
+        =====
+        */
+
+        :where(.ra-link) {
+          display: var(--ra-link-display, inline-flex);
+        }
+
+        :where(.ra-link[href]) {
+          color: var(--ra-link-color, inherit);
+          text-decoration: var(--ra-link-text-decoration, none);
+        }
+
+        :where(.ra-heading) {
+          margin-block-start: var(--ra-heading-margin-block-start, 0);
+          margin-block-end: var(--ra-heading-margin-block-end, 0);
+        }
+
+        /*
+        =====
+        HELPERS
+        =====
+        */
+
+        .ha-screen-reader {
+          width: var(--ha-screen-reader-width, 1px);
+          height: var(--ha-screen-reader-height, 1px);
+          padding: var(--ha-screen-reader-padding, 0);
+          border: var(--ha-screen-reader-border, none);
+
+          position: var(--ha-screen-reader-position, absolute);
+          clip-path: var(--ha-screen-reader-clip-path, rect(1px, 1px, 1px, 1px));
+          overflow: var(--ha-screen-reader-overflow, hidden);
+        }
+
+        /*
+        =====
+        UIA-CARD
+        =====
+        */
+
+        .uia-card__container {
+          display: var(--uia-card-display, grid);
+          gap: var(--uia-card-content-gap);
+        }
+
+        .uia-card__time-divider::before {
+          content: "—";
+          margin-inline: var(--uia-card-time-divider-margin-inline, .15rem);
+        }
+
+        [data-uia-card-skin="1"] .uia-card__container {
+          padding: var(--uia-card-padding, 1rem 1.75rem);
+          background-color: var(--uia-card-background-color);
+          border-radius: var(--uia-card-border-radius, 2px);
+        }
+
+        [data-uia-card-skin="1"] .uia-card__intro {
+          display: grid;
+          gap: var(--uia-card-intro-gap, 1rem);
+        }
+
+        [data-uia-card-skin="1"] .uia-card__time {
+          grid-row: 1 / 1;
+          inline-size: fit-content;
+          padding: var(--uia-card-time-padding, .25rem 1.25rem .25rem);
+          background-color: var(--uia-card-time-background-color, #f0f0f0);
+
+          font-weight: var(--uia-card-time-font-weight, 700);
+          font-size: var(--uia-card-time-font-size, .75rem);
+          text-transform: var(--uia-card-time-text-transform, uppercase);
+          color: var(--uia-card-time-color, currentColor);
+        }
+
+        [data-uia-card-skin="1"][data-uia-card-mod="1"] .uia-card__container {
+          border-inline-start:  var(--uia-card-border-thickness, 2px) var(--uia-card-border-style, solid) var(--uia-card-border-color, currentColor);
+          box-shadow: var(--uia-card-box-shadow, 0 1px 3px 0 rgba(0, 0, 0, .12), 0 1px 2px 0 rgba(0, 0, 0, .24));
+        }
+
+        /*
+        =====
+        UIA-CONTROL
+        =====
+        */
+
+        .uia-control__group {
+          cursor: var(--uia-control-cursor, var(--_uia-control-cursor, pointer)); 
+          line-height: var(--uia-control-line-height, 1);
+        }
+
+        .uia-control {
+          --_uia-control-padding_default: 0;
+
+          --_uia-control-border-width: var(--uia-control-border-width);
+          --_uia-control-border-style: var(--uia-control-border-style, solid);
+          --_uia-control-border-color: var(--uia-control-border-color, currentColor);
+
+          --_uia-control-padding: var(--uia-control-padding,
+                                    var(
+                                      --uia-control-padding-block-start,
+                                      var(--_uia-control-padding_default)
+                                    )
+                                    var(
+                                      --uia-control-padding-inline-end,
+                                      var(--_uia-control-padding_default)
+                                    )
+                                    var(
+                                      --uia-control-padding-block-end, 
+                                      var(--_uia-control-padding_default)
+                                    )
+                                    var(
+                                      --uia-control-padding-inline-start,
+                                      var(--_uia-control-padding_default)
+                                    )
+                                  );
+          --_uia-control-border: var(--_uia-control-border-width) var(--_uia-control-border-style) var(--_uia-control-border-color);
+          --_uia-control-border-radius: var(--uia-control-border-radius, .25rem);
+        }
+
+        .uia-control__group {
+          display: var(--uia-control-display, inline-flex);
+          gap: var(--uia-control-gap, .5rem);
+
+          padding: var(--_uia-control-padding);
+
+          border: var(--_uia-control-border);
+          border-radius: var(--_uia-control-border-radius);
+          background-image: linear-gradient(
+            var(--uia-control-background-degree, 135deg),
+            var(
+              --uia-control-background-start-color,
+              var(--uia-control-background-color)
+            ) var(--uia-control-background-start-position, 0),
+            var(
+              --uia-control-background-end-color,
+              var(--uia-control-background-color)
+            ) var(--uia-control-background-end-position, 100%)
+          );
+        }
+
+        /*
+        =====
+        TYPOGRAPHY
+        =====
+        */
+
+        body {
+          font-family: var(--ds-typography-main-font-family, system-ui);
+          font-size: var(--ds-typography-main-font-size, 1rem);
+          color: var(--ds-typography-main-color, #222);
+          line-height: var(--ds-typography-main-line-height, 1.75);
+        }
+
+        p:not([class]) {
+          margin-block: var(--ds-typography-paragraph-margin-block-start, var(--_ds-typography-main-margin)) 0;
+        }
+
+        /*
+        =====
+        DEMO
+        =====
+        */
+
+        :root {
+          --uia-timeline-line-color: #4557bb;
+          --uia-timeline-dot-color: #4557bb;
+          --uia-timeline-arrow-color: #4557bb;
+          --uia-timeline-line-thickness: 3px;
+          --uia-timeline-point-border-color: #4557bb;
+          --uia-timeline-group-padding: 1.5rem 1.5rem 1.25rem;
+
+          --ds-typography-main-line-height: 1.5;
+        }
+
+        .timeline-5-2 {
+          --uia-timeline-line-mask-color: #f0f0f0
+        }
+
+        [data-uia-timeline-skin="3"] {
+          --uia-timeline-year-background-color: #4557bb;
+        }
+
+        body {
+          background-color: #f0f0f0;
+          margin: 0;
+          display: flex;
+          flex-direction: column;
+        }
+
+        .page {
+          box-sizing: border-box;
+          inline-size: min(100%, 90ch);
+          padding: 1rem 1rem 1rem;
+          margin-inline: auto;
+        }
+
+        .linktr {
+          --uia-control-background-color: rgb(209, 246, 255);
+          --uia-control-border-radius: 2rem;
+          --uia-control-padding: .75rem 1.5rem;
+          --uia-control-border-width: 1px;
+          --uia-control-border-color: rgb(209, 246, 255);
+
+          display: flex;
+          justify-content: flex-end;
+          padding: 2rem;
+          text-align: center;
+        }
+
+        .linktr__goal { 
+          box-shadow: rgb(8 49 112 / 24%) 0 2px 8px 0;  
+        }
+                 .btn-grad {
+                    background-image: linear-gradient(to right, #2b5876 0%, #4e4376  51%, #2b5876  100%);
+                    margin: 15px 10px;
+                    font-size: 30px;
+                    padding: 2px 15px;
+                    text-align: center;
+                    text-transform: uppercase;
+                    transition: 0.5s;
+                    background-size: 200% auto;
+                    color: white;            
+                    box-shadow: 0 0 20px #eee;
+                    border-radius: 50%;
+
+                  }
+
+                  .btn-grad:hover {
+                    background-position: right center; /* change the direction of the change here */
+                    color: #fff;
+                    text-decoration: none;
+                  }
+        .projectname{
+          text-decoration: underline;font-weight: large;
+          font-weight: bold;line-height: 2;
+        }
+               .content-div {
+                    display: none;
+                }
+
+
+                .demo-timeline-time-grid,
+                .demo-timeline-time-grid .mbsc-page {
+                    height: 100%;
+                }
+            }
+        </style>
+        <script type="text/javascript">
+
+        </script>
+
+          </head>
+
+          <body>
+            <div class="container-scroller">
+              <!-- partial:../../partials/_navbar.html -->
+              <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+                <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
+                  <a class="navbar-brand brand-logo" href="#" ><img src="{{ url_for('static', filename='assets/images/bpxlogo.svg') }}" alt="logo" />
+                  </a>
+                </div>
+                <div class="navbar-menu-wrapper d-flex align-items-stretch">
+                  <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+                    <span class="mdi mdi-menu"></span>
+                  </button>
+                  <div class="search-field d-none d-md-block">
+                    <form class="d-flex align-items-center h-100" action="#">
+                      <div class="input-group">
+                        <div class="input-group-prepend bg-transparent">
+                          <i class="input-group-text border-0 mdi mdi-magnify"></i>
+                        </div>
+                        <input type="text" class="form-control bg-transparent border-0" placeholder="Search projects">
+                      </div>
+                    </form>
+                  </div>
+                  <ul class="navbar-nav navbar-nav-right">
+
+                    <li class="nav-item d-none d-lg-block full-screen-link">
+                      <a class="nav-link">
+                        <i class="mdi mdi-fullscreen" id="fullscreen-button"></i>
+                      </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                      <a class="nav-link count-indicator dropdown-toggle" id="messageDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="mdi mdi-email-outline"></i>
+                        <span class="count-symbol bg-warning"></span>
+                      </a>
+                      <div class="dropdown-menu dropdown-menu-end navbar-dropdown preview-list" aria-labelledby="messageDropdown">
+                        <h6 class="p-3 mb-0">Messages</h6>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item preview-item">
+                          <div class="preview-thumbnail">
+                            <img src="../../assets/images/faces/face4.jpg" alt="image" class="profile-pic">
+                          </div>
+                          <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
+                            <h6 class="preview-subject ellipsis mb-1 font-weight-normal">Mark send you a message</h6>
+                            <p class="text-gray mb-0"> 1 Minutes ago </p>
+                          </div>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item preview-item">
+                          <div class="preview-thumbnail">
+                            <img src="../../assets/images/faces/face2.jpg" alt="image" class="profile-pic">
+                          </div>
+                          <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
+                            <h6 class="preview-subject ellipsis mb-1 font-weight-normal">Cregh send you a message</h6>
+                            <p class="text-gray mb-0"> 15 Minutes ago </p>
+                          </div>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item preview-item">
+                          <div class="preview-thumbnail">
+                            <img src="../../assets/images/faces/face3.jpg" alt="image" class="profile-pic">
+                          </div>
+                          <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
+                            <h6 class="preview-subject ellipsis mb-1 font-weight-normal">Profile picture updated</h6>
+                            <p class="text-gray mb-0"> 18 Minutes ago </p>
+                          </div>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <h6 class="p-3 mb-0 text-center">4 new messages</h6>
+                      </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                      <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-bs-toggle="dropdown">
+                        <i class="mdi mdi-bell-outline"></i>
+                        <span class="count-symbol bg-danger"></span>
+                      </a>
+                      <div class="dropdown-menu dropdown-menu-end navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
+                        <h6 class="p-3 mb-0">Notifications</h6>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item preview-item">
+                          <div class="preview-thumbnail">
+                            <div class="preview-icon bg-success">
+                              <i class="mdi mdi-calendar"></i>
+                            </div>
+                          </div>
+                          <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
+                            <h6 class="preview-subject font-weight-normal mb-1">Event today</h6>
+                            <p class="text-gray ellipsis mb-0"> Just a reminder that you have an event today </p>
+                          </div>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item preview-item">
+                          <div class="preview-thumbnail">
+                            <div class="preview-icon bg-warning">
+                              <i class="mdi mdi-cog"></i>
+                            </div>
+                          </div>
+                          <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
+                            <h6 class="preview-subject font-weight-normal mb-1">Settings</h6>
+                            <p class="text-gray ellipsis mb-0"> Update dashboard </p>
+                          </div>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item preview-item">
+                          <div class="preview-thumbnail">
+                            <div class="preview-icon bg-info">
+                              <i class="mdi mdi-link-variant"></i>
+                            </div>
+                          </div>
+                          <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
+                            <h6 class="preview-subject font-weight-normal mb-1">Launch Admin</h6>
+                            <p class="text-gray ellipsis mb-0"> New admin wow! </p>
+                          </div>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <h6 class="p-3 mb-0 text-center">See all notifications</h6>
+                      </div>
+                    </li>
+                    <li class="nav-item nav-logout d-none d-lg-block">
+                      <a class="nav-link" href="#">
+                        <i class="mdi mdi-power"></i>
+                      </a>
+                    </li>
+                    <li class="nav-item nav-settings d-none d-lg-block">
+                      <a class="nav-link" href="#">
+                        <i class="mdi mdi-format-line-spacing"></i>
+                      </a>
+                    </li>
+                  </ul>
+                  <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+                    <span class="mdi mdi-menu"></span>
+                  </button>
+                </div>
+              </nav>
+              <!-- partial -->
+              <div class="container-fluid page-body-wrapper" style="padding-left: 0px;">
+                <!-- partial:../../partials/_sidebar.html -->
+                <nav class="sidebar sidebar-offcanvas" id="sidebar">
+                  <ul class="nav">
+
+                    <li class="nav-item">
+                      <a class="nav-link" href="/">
+                        <span class="menu-title">Dashboard</span>
+                        <i class="mdi mdi-home menu-icon"></i>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="/projectoverview">
+                        <span class="menu-title">Project Overview</span>
+                        <i class="mdi mdi-clipboard-outline menu-icon"></i>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="/finance">
+                        <span class="menu-title">Financial Foecast</span>
+                        <i class="mdi mdi-chart-line menu-icon"></i>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="/projectactivity">
+                        <span class="menu-title">Project Activity</span>
+                        <i class="mdi  mdi-clipboard-text menu-icon"></i>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="/studytimeline2">
+                        <span class="menu-title">Project Study</span>
+                        <i class="mdi mdi-calendar-check menu-icon"></i>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="/notes_issues">
+                        <span class="menu-title">Notes & Issue</span>
+                        <i class="mdi mdi-calendar-check menu-icon"></i>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="/project_milestone">
+                        <span class="menu-title">Projectt Milestone</span>
+                        <i class="mdi mdi-calendar-check menu-icon"></i>
+                      </a>
+                    </li>
+
+                  </ul>
+                </nav>
+                <!-- partial -->
+                <div class="main-panel">
+                  <div class="content-wrapper">
+                    <div class="page-header">
+                      <h3 class="page-title"> Project Study Timeline </h3>
+                      <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                          <li class="breadcrumb-item"><a href="/">Home</a></li>
+                          <li class="breadcrumb-item active" aria-current="page">Project Study Timeline </li>
+                        </ol>
+                      </nav>
+                    </div>
+                    <div class="row">
+
+                    <!-- CHATBOT -->
+                    <div id="chat-button" class="chat-button">💬</div>
+                    <div id="chat-box" class="chat-box">
+                        <div class="chat-header">
+                            <h4>Chat</h4>
+                            <button id="close-chat" class="close-chat">×</button>
+                        </div>
+                        <div class="chat-content" id="chat-content"></div>
+                        <div class="chat-input">
+                            <textarea id="chatinputtext" placeholder="Type your message..."></textarea>
+                            <button id="send-button">Send</button>
+                        </div>
+                    </div>
+
+                    <!-- CHATBOT END -->
+                      <div class="col-12 grid-margin">
+                        <div class="card">
+                          <div class="card-body">
+                            <h4 class="card-title">Project Study</h4>
+
+            <input type="radio" id="project" name="toggle" value="project" onclick="toggleDivs()" checked> 
+            <label for="project">Project</label> 
+            <input type="radio" id="timeline" name="toggle" value="timeline" onclick="toggleDivs()"> 
+            <label for="timeline">Timeline</label> 
+            <input type="radio" id="milestone" name="toggle" value="milestone" onclick="toggleDivs()"> 
+            <label for="milestone">Milestone Status</label> 
+
+        <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal"><span class="mdi mdi-file-plus" style="font-size: 22px;padding-right: 10px;"></span>Add</button> -->
+        <!-- <button id='btn_save' class="btn btn-success">Save</button> -->
+           <div id="projectDiv" class="content-div">
+        <div class="trackers-container">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Project</th>
+              <th scope="col">Status</th>
+              <th scope="col">Budget</th>
+              <th scope="col">Accrual</th>
+              <th scope="col">Actual</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            {% for id, value in projectdata.items():%}
+
+              <tr>
+              <!-- off canvas right side --> 
+        <div class="offcanvas offcanvas-start" id="{{ id }}">
+          <div class="offcanvas-header">
+            <h2 class="offcanvas-title">{{ value['name'] }}</h2>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+          </div>
+          <div class="offcanvas-body">
+
+        <div class="page">
+          <div class="uia-timeline" data-uia-timeline-skin="2" data-uia-timeline-adapter-skin-2="ui-card-skin-#1" data-uia-card-skin="1" data-uia-card-mod="1">
+            <div class="uia-timeline__container">
+              <div class="uia-timeline__line"></div>
+              <div class="uia-timeline__groups" id="xy{{ id }}12">
+                {% for ids2, value2 in listdata.items() %}
+                  {% if id == ids2 %}
+              <section class="uia-timeline__group" aria-labelledby="experience-step-1-heading">
+                  <div class="uia-timeline__dot"></div>
+                  <div class="uia-timeline__point uia-card">
+                    <div class="uia-card__container">
+                      <div class="uia-card__intro">
+                        <h3 id="experience-step-1-heading" class="ra-heading">
+                        {{ value2['title'] }} </h3>
+                        <span class="uia-card__time">
+        <!--                   <span class="ha-screen-reader">from</span>
+                          <time datetime="2012-02">February 2013</time> 
+                          <span class="uia-card__time-divider" aria-hidden="true"></span> 
+                          <span class="ha-screen-reader">to</span> -->
+                          <time datetime="2013-07">{{ value2['date'] }}</time>
+                        </span>
+                      </div>
+                      <div class="uia-card__body">
+                        <div class="uia-card__description">
+                              {{ value2['description'] }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+                  {% endif %}
+                {% endfor %}
+              </div>
+
+            </div>
+          </div>
+          <div style="text-align: right;">
+            <button class="btn btn-info" style="margin:10px 14px; margin-bottom: 15px;" onclick="saveTimelineData(`{{ id }}`)">Save Timeline Data</button>
+            <button onclick="appendTimelineItem(`xy{{ id }}12`)" class="btn-grad">+</button>
+          </div>
+
+        </div>      
+          </div>
+        </div>
+        </div>
+        <!-- END off canvas -->
+              <td><a class="projectname" data-bs-toggle="offcanvas" data-bs-target="#{{ id }}">{{ value['name'] }}</a>
+              <br/><span>{{ value['start_date'] }} - {{ value['end_date'] }}</span>
+              </td>
+
+              {% if value['status'] == 'Completed' %}
+                <td data-label="Due Date">
+                <span class="badge bg-success">{{value['status']}}</span></td> 
+              {% elif value['status'] == 'Ongoing' %}
+                <td data-label="Due Date">
+                <span class="badge bg-info">{{value['status']}}</span></td>
+              {% else %}
+                <td data-label="Due Date">
+                <span class="badge bg-warning">{{value['status']}}</span></td>
+              {% endif %}
+
+
+            <td>
+                <input class="slider" 
+                       type="range" 
+                       min="0" 
+                       max="200000" 
+                       step="1" 
+                       value="{{ value['ProjectBudget'] }}" 
+                       oninput="updateSliderValue(this)" />
+                <span class="sliderValueLabel">$ 
+                    <span class="sliderValue">{{ value['ProjectBudget'] }}</span>
+                </span>
+            </td>
+
+            <td>
+                <input class="slider" 
+                       type="range" 
+                       min="0" 
+                       max="200000" 
+                       step="1" 
+                       value="{{ value['accrual'] }}" 
+                       oninput="updateSliderValue(this)" />
+                <span class="sliderValueLabel">$ 
+                    <span class="sliderValue">{{ value['accrual'] }}</span>
+                </span>
+            </td>
+
+            <td>    
+                <input class="slider" 
+                       type="range" 
+                       min="0" 
+                       max="200000" 
+                       step="1" 
+                       value="{{ value['actual'] }}" 
+                       oninput="updateSliderValue(this)" />
+                <span class="sliderValueLabel">$ 
+                    <span class="sliderValue">{{ value['actual'] }}</span>
+                </span>
+            </td>
+
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        </div>
+            </div>
+                  <!-- Timeline -->
+            <div id="timelineDiv" class="content-div">
+                <div mbsc-page class="demo-timeline-time-grid">
+                <div style="height:100%">
+                    <div id="demo-timeline-time-grid"></div>
+
+                </div>
+            </div>
+        <!-- -->
+
+        <!-- Milestone -->
+
+          <div id="milestoneDiv" class="content-div">
+            <h3>Milestone Status Section</h3>
+           <input id="rangeSlider" type="text" class="slider" />
+
+          </div>
+        <!-- -->
+
+        <!-- END  -->
+
+        <div id="portfolioviewContainer" class="hidden">
+              <div id="chart_div" style="width: 100%; height: 400px;margin-top: 50px;"></div>
+            <!-- portfolioviewContainer will be added here -->
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="myModalLabel">Add Milestones</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <label>Project Name </label>
+                        <input type="text" id="projectid" class="form-control" placeholder="Enter Project Name " required="required">
+                        <div class="mt-4">
+                        <label>Project Cost ($).</label>
+                        <input type="number" id="milestoneCount" class="form-control" placeholder="Enter Total Cost...." required="required"></div>
+
+                    <div class="row mt-4">
+                      <div class="col-6 grid-margin">Start Date<input type="date" id='d1' class="form-control"></div>
+                      <div class="col-6 grid-margin">End Date<input type="date" id='d2' class="form-control"></div>
+                    </div>
+                  </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btndanger">Close</button>
+                        <button type="button" class="btn btn-primary" id="addMilestones">Add</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+                            <!-- <div id="example4.2" style="height: 700px;"></div> -->
+                          </div>
+                        </div>
+                      </div>
+
+
+                      <div class="col-md-6 grid-margin stretch-card">
+                        <div class="card">
+
+                    </div>
+                  </div>
+              <footer class="footer">
+                    <div class="d-sm-flex justify-content-center justify-content-sm-between">
+                      <span class="text-muted text-center text-sm-left d-block d-sm-inline-block"><h4>BPX Team</h4></span>
+                      <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">helpdesk@bpx.ai</span>
+                    </div>
+                  </footer>
+                  <!-- partial -->
+                </div>
+                <!-- main-panel ends -->
+              </div>
+              <!-- page-body-wrapper ends -->
+            </div>
+
+        <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+
+        <!-- Optional: Bootstrap and Popper.js -->
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+        <!-- Bootstrap Slider (make sure it's loaded after jQuery) -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.6.2/bootstrap-slider.min.js"></script>
+
+        <!-- Mobiscroll -->
+        <script src="{{ url_for('static', filename='assets/js/mobiscroll.javascript.min.js') }}"></script>
+
+        <!-- Additional scripts that depend on jQuery -->
+        <script src="{{ url_for('static', filename='assets/vendors/js/vendor.bundle.base.js') }}"></script>
+        <script src="{{ url_for('static', filename='assets/js/chatbot.js') }}"></script>
+
+        <!-- End custom js for this page -->
+        <script src="{{ url_for('static', filename='assets/js/file-upload.js') }}"></script>
+        <script src="{{ url_for('static', filename='assets/js/typeahead.js') }}"></script>
+        <script src="{{ url_for('static', filename='assets/js/select2.js') }}"></script>
+        <!-- Add your JavaScript code here -->
+        <script type="text/javascript">
+
+          function saveTimelineData(proid) {
+            // Get all the timeline sections
+            const ids = '#xy'+proid+'12'
+            const sections = document.querySelectorAll(ids);
+            const timelineData = [];
+
+            sections.forEach(section => {
+                const title = section.querySelector('.ra-heading').textContent;
+                const startTime = section.querySelector('.uia-card__time time:first-of-type').textContent;
+                const endTime = section.querySelector('.uia-card__time time:last-of-type').textContent;
+                const description = section.querySelector('.uia-card__description').innerText;
+
+                // Push the collected data into an array
+                timelineData.push({
+                    title: title,
+                    startTime: startTime,
+                    // endTime: endTime,
+                    description: description
+                });
+            });
+
+            // Log the collected data (you can modify this to send data to a server or perform other actions)
+            console.log(timelineData);
+            console.log(proid);
+            $.ajax({
+              url: '/list_insert',
+              type: 'POST',
+              contentType: 'application/json',
+              data: JSON.stringify({ data: timelineData,ids:proid}),
+              success: function(response) {
+                //createTracker(project_name,project_cost,d1,d2);
+                console.log(response);
+                alert("successfully inserted.")
+
+            },
+              error: function(xhr, status, error) {
+                console.log('An error occurred: ' + error);
+                }
+            });
+        }
+
+        function appendTimelineItem(ids) {
+            // Get the current date
+            const currentDate = new Date();
+            const options = { year: 'numeric', month: 'long',day: '2-digit',weekday:"long", hour: '2-digit', hour12: false, minute:'2-digit', second:'2-digit' };
+            const formattedDate = currentDate.toLocaleDateString('en-US', options);
+
+            // Create the section element
+            const section = document.createElement('section');
+            section.className = 'uia-timeline__group';
+            section.setAttribute('aria-labelledby', 'experience-step-1-heading');
+
+            // Create the dot element
+            const dot = document.createElement('div');
+            dot.className = 'uia-timeline__dot';
+
+            // Create the point (uia-card) container
+            const point = document.createElement('div');
+            point.className = 'uia-timeline__point uia-card';
+
+            const cardContainer = document.createElement('div');
+            cardContainer.className = 'uia-card__container';
+
+            // Create the intro container
+            const intro = document.createElement('div');
+            intro.className = 'uia-card__intro';
+
+            const heading = document.createElement('h3');
+            heading.setAttribute('contenteditable', 'true');
+            heading.id = 'experience-step-1-heading';
+            heading.className = 'ra-heading';
+            heading.textContent = 'Title';
+
+            const timeContainer = document.createElement('span');
+            timeContainer.className = 'uia-card__time';
+
+            const fromText = document.createElement('span');
+            fromText.className = 'ha-screen-reader';
+            fromText.textContent = 'from';
+
+            const startTime = document.createElement('time');
+            startTime.setAttribute('datetime', currentDate.toISOString().split('T')[0]);
+            startTime.textContent = formattedDate;
+
+            const timeDivider = document.createElement('span');
+            timeDivider.className = 'uia-card__time-divider';
+            timeDivider.setAttribute('aria-hidden', 'true');
+            timeDivider.textContent = ' — ';
+
+            const toText = document.createElement('span');
+            toText.className = 'ha-screen-reader';
+            toText.textContent = 'to';
+
+            const endTime = document.createElement('time');
+            endTime.setAttribute('datetime', currentDate.toISOString().split('T')[0]);
+            endTime.textContent = formattedDate;
+
+            // Append time elements
+            timeContainer.appendChild(startTime);
+            // timeContainer.appendChild(startTime);
+            // timeContainer.appendChild(timeDivider);
+            // timeContainer.appendChild(toText);
+            // timeContainer.appendChild(endTime);
+
+            // Append heading and time to intro
+            intro.appendChild(heading);
+            intro.appendChild(timeContainer);
+
+            // Create the body and description elements
+            const body = document.createElement('div');
+            body.className = 'uia-card__body';
+
+            const description = document.createElement('div');
+            description.className = 'uia-card__description';
+            description.setAttribute('contenteditable', 'true'); // Make the description editable
+
+            const p1 = document.createElement('p');
+            p1.textContent = 'Description';
+
+            // const p2 = document.createElement('p');
+            // p2.textContent = 'As a young developer';
+
+            // const p3 = document.createElement('p');
+            // p3.textContent = 'But one day';
+
+            // Append paragraphs to description
+            description.appendChild(p1);
+            // description.appendChild(p2);
+            // description.appendChild(p3);
+
+            // Append description to body
+            body.appendChild(description);
+
+            // Append intro and body to card container
+            cardContainer.appendChild(intro);
+            cardContainer.appendChild(body);
+
+            // Append dot and card container to point
+            point.appendChild(dot);
+            point.appendChild(cardContainer);
+
+            // Append point to section
+            section.appendChild(point);
+
+            // Append the section to the uia-timeline__groups div
+            document.querySelector('#'+ids).appendChild(section);
+        }
+
+
+          jQuery.noConflict();
+          jQuery(document).ready(function() {
+                  $('#addMilestones').click(function() {
+
+          var project_name = document.getElementById('projectid').value;
+          var project_cost = document.getElementById('milestoneCount').value;
+          var d1 = document.getElementById('d1').value;
+          var d2 = document.getElementById('d2').value;
+          //var duration = calculateMonthsBetweenDates(d1,d2);
+          if (!milestoneCount || !d1 || !d2) {
+                alert('Please fill in all fields.');
+                return;
+            }
+
+            $.ajax({
+              url: '/test2_studytimeline',
+              type: 'POST',
+              contentType: 'application/json',
+              data: JSON.stringify({ name: project_name,cost:project_cost,start:d1,end:d2}),
+              success: function(response) {
+                $('#btndanger').click();
+                location.reload();
+                //createTracker(project_name,project_cost,d1,d2);
+                console.log(response)
+                window.location.reload();
+            },
+              error: function(xhr, status, error) {
+                console.log('An error occurred: ' + error);
+                }
+            });
+          });
+        });
+
+        function updateSliderValue(slider) {
+            var value = slider.value;
+            var valueLabel = slider.parentElement.querySelector('.sliderValue');
+            valueLabel.textContent = value;
+        }
+
+               function toggleDivs() {
+                    // Get all radio buttons
+                    const radios = document.getElementsByName('toggle');
+                    // Loop through each radio button to check which one is selected
+                    radios.forEach(radio => {
+                        // Get the corresponding div based on the radio button value
+                        const targetDiv = document.getElementById(radio.value + 'Div');
+                        if (radio.checked) {
+                            targetDiv.style.display = 'block'; // Show the selected section
+                        } else {
+                            targetDiv.style.display = 'none'; // Hide the other sections
+                        }
+                    });
+                }
+
+
+
+                // Initialize the visible section on page load
+                $(document).ready(function() {
+                    toggleDivs(); // Show the default checked section (Project)
+                });
+
+        ///////////////////////////////////////////
+        $(document).ready(function() {
+            $("#rangeSlider").slider({
+
+                min: 0,
+                max: 400,
+                step: 1,
+                value: [0, 400], // Default value
+                ticks: [0, 100, 200, 300, 400],
+                ticks_positions: [0, 25, 50, 75, 100],
+                ticks_labels: ['$0', '$100', '$200', '$300', '$400'],
+                ticks_snap_bounds: 10,
+                formatter: function(value) {
+                    return 'Current value: ' + value;
+                }
+            });
+        }); 
+
+
+        //########################################################
+             mobiscroll.setOptions({
+                    locale: mobiscroll.localeEn,
+                    theme: 'ios',
+                    themeVariant: 'light'
+                });
+
+                // Initialize an empty Mobiscroll calendar
+                var calendar = mobiscroll.eventcalendar('#demo-timeline-time-grid', {
+                    view: {
+                        timeline: {
+                            type: 'week'
+                        }
+                    },
+                    resources: [] // Resources will be set dynamically
+                });
+
+                // Fetch your JSON data from the API
+                fetch('/studytimeline_v2_createTimelinechart') // Replace with your actual API endpoint
+                    .then(response => response.json())
+                    .then(data => {
+                  // Transform the JSON data to create resources and events                       
+                      console.log(data);
+                        let resources = [];
+                        let events = [];
+
+                        let resourceId = 1; // Initialize resource ID
+
+                        for (let key in data) {
+                            let project = data[key];
+
+                            // Add project name to resources
+                            resources.push({
+                                id: resourceId, // Incremental resource ID
+                                name: project.name, // Use the project name as the resource name
+                                color: getRandomColor() // Optional: Assign a random color or specific logic here
+                            });
+
+                            // Add corresponding project to events
+                            events.push({
+                                id: key, // Unique project ID
+                                resource: resourceId, // Link the event to the correct resource (project name)
+                                start: project.start_date, // 'start_date' from API
+                                end: project.end_date, // 'end_date' from API
+                                title: project.name // Project name as the title
+                            });
+
+                            resourceId++; // Increment resource ID for the next project
+                        }
+
+                        // Update the resources and events in the calendar
+                        calendar.setOptions({ resources: resources });
+                        calendar.setEvents(events);
+                    })
+                    .catch(error => console.error('Error fetching data:', error));
+
+                // Optional: Function to generate random colors
+                function getRandomColor() {
+                    let letters = '0123456789ABCDEF';
+                    let color = '#';
+                    for (let i = 0; i < 6; i++) {
+                        color += letters[Math.floor(Math.random() * 16)];
+                    }
+                    return color;
+                }
+
+
+        </script>
+
+
+          </body>
+        </html>

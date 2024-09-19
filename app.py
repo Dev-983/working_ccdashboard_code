@@ -8,11 +8,17 @@ from flask_cors import CORS
 from collections import Counter
 import os
 import json
-from database_fun import insert_studytimeline,loadData
-from airtabledb import getDataFromPrograms,create_record_Program,add_list,getList
+
+import textwrap
+import google.generativeai as genai
+#from database_fun import insert_studytimeline,loadData
+from airtabledb import getDataFromPrograms,create_record_Program,add_list,getList,getCCProjects
 
 ##### ONLINE CHAT BOT FILE 
-file_path = 'https://bpxai-my.sharepoint.com/personal/manas_shalgar_bpx_ai/_layouts/15/download.aspx?share=EW7IZR3VH_ZDp_rhgbv9GlQBowPIosXVpfUCXsAUTYNJ8Q'
+#file_path = 'https://bpxai-my.sharepoint.com/personal/manas_shalgar_bpx_ai/_layouts/15/download.aspx?share=Ecl-r_TQw0tLv-aa5PlH5p0B2vN-gDy9Br-xlstFkCyvJA'
+#####
+#file_path = 'https://bpxai-my.sharepoint.com/personal/manas_shalgar_bpx_ai/_layouts/15/download.aspx?share=EW7IZR3VH_ZDp_rhgbv9GlQBowPIosXVpfUCXsAUTYNJ8Q'
+file_path="Mockup_Dashboard_cleandatav2.xlsx"
 DATA_FILE = os.path.join('boxes_data.json')
 app = Flask(__name__, static_folder='static')
 CORS(app)
@@ -22,6 +28,8 @@ CORS(app)
 ########################################################################
 def main_all_data():
     #file_path = 'Mockup_Dashboard_cleandatav2.xlsx'
+    def formatenum(num):
+        return f"{int(num):,}"
 
 # Read the data from each sheet
     df_sheet_name4 = pd.read_excel(file_path, sheet_name='Total Risk')
@@ -49,6 +57,9 @@ def main_all_data():
             'LT_Budget': row['LT_Budget'],
             'LT_Budget_Cashout': row['Cash Out'],
             'LT_Budget_Accrual': row['Accrual Unit'] * row['Accrual #'],
+            'labelbg':formatenum(row['LT_Budget']),
+            'labelacc':formatenum(row['Accrual Unit'] * row['Accrual #']),
+            'labelcas':formatenum(row['Cash Out']),
             'DateDiff': row['Accrual #'],
             'milestonecompletion_per':row['% Completed'],
             'actualprogess':row['Total Completed'],
@@ -308,7 +319,7 @@ def get_data2():
     return jsonify(bottom_5_output)
 ############################### END ###########################
 def milstone_gauntchart():
-    #file_path = 'Mockup_Dashboard_cleandatav2.xlsx'
+    file_path = 'Mockup_Dashboard_cleandatav2.xlsx'
     # Read the data from the 'Financials Data' sheet
     df_sheet_name = pd.read_excel(file_path, sheet_name='Financials Data')   
     # Initialize an empty dictionary to store milestones
@@ -334,7 +345,7 @@ def milstone_gauntchart():
         })        
         # Remove keys with None values
         milestones[project_id] = {k: v for k, v in milestones[project_id].items() if v is not None}
-    
+    #print(milestones)
     return milestones
 
 ########### PROJECT ACTIVITY TAB ##################
@@ -426,33 +437,9 @@ def risk_data():
             })
 
     return project_dict
-##############################
+#######################################################
 @app.route('/projectoverview')
 def projectOverview():
-    # q1 =  page2_table2()
-    # table1 = page2_table1()
-    # #time.sleep(2)
-    # df_sheet_name2 = pd.read_excel(file_path, sheet_name='Financials Data')
-    # project_dict1={}
-    # for index, row in df_sheet_name2.iterrows():
-    #     project_id=row['Project ID']
-    #     if project_id not in project_dict1:
-    #         project_dict1[project_id] = {}
-    #     project_dict1[project_id].update({
-    #         'projectid':row['Project ID'],
-    #         'duration':row['Duration (mo)'],
-    #         'milestone':round((row['% Completed']*100),2),
-    #         'ltbudget': row['LT_Budget'],
-    #         'accrual': round((row['Accrual Unit'] * row['Accrual #']),2),
-    #         'cashout': row['Cash Out'],
-    #         'accrual%': ((row['Accrual Unit'] * row['Accrual #'])/row['LT_Budget'])*100,
-    #         'cashout%': (row['Cash Out']/row['LT_Budget'])*100
-    #     })
-    #time.sleep(2)
-    #riskdata = risk_data()
-    # print("---------------------------------------------")
-    #print(riskdata)
-    # print("---------------------------------------------")
     data = main_all_data()
     return render_template('project_overview.html',data1 =data)
     #return render_template('project_overview.html',table1 =table1 ,q1=q1,table3=project_dict1,riskdata=riskdata)
@@ -525,6 +512,10 @@ def notesissues():
 
 ################################## END #############################################
 ################################## CHAT TAB #############################################
+@app.route('/progress')
+def testpage():
+    return render_template('testpage.html')
+
 @app.route('/chat')
 def chat():
     return render_template('chat.html')
@@ -547,6 +538,26 @@ def studytimeline_test():
     return render_template('studytimeline.html')
 
 ############################################################
+@app.route('/studytimeline_v2_createTimelinechart')
+def studytimeline_v2_createTimelinechart():
+    ccproject = getCCProjects()
+    return jsonify(ccproject)
+#################################################
+@app.route('/test')
+def test():
+    ccproject = getCCProjects()
+    listdata = getList()
+    return render_template('studytimeline.html',projectdata=ccproject,listdata=listdata)
+#####################################################
+
+@app.route('/studytimeline_v2')
+def studytimeline_v2():
+    ccproject = getCCProjects()
+    listdata = getList()
+    return render_template('studytimeline_v2.html',projectdata=ccproject,listdata=listdata)
+
+
+#############################################################
 @app.route('/list_insert', methods=['POST'])
 def list_insert():
     data = request.json
@@ -554,7 +565,6 @@ def list_insert():
     ids = data.get('ids')
     res = add_list(dataset,ids)
     return jsonify({'success':res})
-
 
 @app.route('/test2_studytimeline', methods=['POST'])
 def add_studytimeline_project():
